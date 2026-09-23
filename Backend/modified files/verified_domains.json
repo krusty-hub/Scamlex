@@ -1,0 +1,481 @@
+{
+  "gtbank.com": {
+    "organization": "Guaranty Trust Bank (GTBank)",
+    "domain": "gtbank.com",
+    "category": "banking",
+    "verified_sender_emails": [
+      "gears@gtbank.com",
+      "enquiries@gtbank.com",
+      "alerts@gtbank.com"
+    ],
+    "sender_subdomains": [
+      "ebank.gtbank.com",
+      "mail.gtbank.com"
+    ]
+  },
+  "accessbankplc.com": {
+    "organization": "Access Bank",
+    "domain": "accessbankplc.com",
+    "category": "banking",
+    "verified_sender_emails": [
+      "contactcenter@accessbankplc.com",
+      "alerts@accessbankplc.com"
+    ],
+    "sender_subdomains": [
+      "online.accessbankplc.com"
+    ]
+  },
+  "zenithbank.com": {
+    "organization": "Zenith Bank",
+    "domain": "zenithbank.com",
+    "category": "banking",
+    "verified_sender_emails": [
+      "zenithdirect@zenithbank.com",
+      "alerts@zenithbank.com"
+    ],
+    "sender_subdomains": [
+      "mail.zenithbank.com"
+    ]
+  },
+  "ubagroup.com": {
+    "organization": "United Bank for Africa (UBA)",
+    "domain": "ubagroup.com",
+    "category": "banking",
+    "verified_sender_emails": [
+      "cfc@ubagroup.com",
+      "alert@ubagroup.com"
+    ],
+    "sender_subdomains": [
+      "mail.ubagroup.com"
+    ]
+  },
+  "firstbanknigeria.com": {
+    "organization": "First Bank of Nigeria",
+    "domain": "firstbanknigeria.com",
+    "category": "banking",
+    "verified_sender_emails": [
+      "firstcontact@firstbanknigeria.com",
+      "alerts@firstbanknigeria.com"
+    ],
+    "sender_subdomains": [
+      "mail.firstbanknigeria.com"
+    ]
+  },
+  "kuda.com": {
+    "organization": "Kuda Bank",
+    "domain": "kuda.com",
+    "category": "banking",
+    "verified_sender_emails": [
+      "help@kuda.com",
+      "support@kuda.com"
+    ],
+    "sender_subdomains": [
+      "mail.kuda.com"
+    ]
+  },
+  "opayweb.com": {
+    "organization": "OPay",
+    "domain": "opayweb.com",
+    "category": "banking",
+    "verified_sender_emails": [
+      "support@opayweb.com",
+      "posservice@opayweb.com"
+    ],
+    "sender_subdomains": [
+      "app.opayweb.com"
+    ]
+  },
+  "moniepoint.com": {
+    "organization": "Moniepoint",
+    "domain": "moniepoint.com",
+    "category": "banking",
+    "verified_sender_emails": [
+      "support@moniepoint.com",
+      "compliance@moniepoint.com"
+    ],
+    "sender_subdomains": [
+      "portal.moniepoint.com"
+    ]
+  },
+  "stanbicibtcbank.com": {
+    "organization": "Stanbic IBTC Bank",
+    "domain": "stanbicibtcbank.com",
+    "category": "banking",
+    "verified_sender_emails": [
+      "customercarenigeria@stanbicibtc.com"
+    ],
+    "sender_subdomains": [
+      "online.stanbicibtcbank.com"
+    ]
+  },
+  "fidelitybank.ng": {
+    "organization": "Fidelity Bank Nigeria",
+    "domain": "fidelitybank.ng",
+    "category": "banking",
+    "verified_sender_emails": [
+      "true.serve@fidelitybank.ng"
+    ],
+    "sender_subdomains": [
+      "online.fidelitybank.ng"
+    ]
+  },
+  "fcmb.com": {
+    "organization": "First City Monument Bank (FCMB)",
+    "domain": "fcmb.com",
+    "category": "banking",
+    "verified_sender_emails": [
+      "customerservice@fcmb.com"
+    ],
+    "sender_subdomains": [
+      "online.fcmb.com"
+    ]
+  },
+  "sterling.ng": {
+    "organization": "Sterling Bank",
+    "domain": "sterling.ng",
+    "category": "banking",
+    "verified_sender_emails": [
+      "customercare@sterling.ng"
+    ],
+    "sender_subdomains": [
+      "online.sterling.ng"
+    ]
+  },
+  "wemabank.com": {
+    "organization": "Wema Bank",
+    "domain": "wemabank.com",
+    "category": "banking",
+    "verified_sender_emails": [
+      "purpleconnect@wemabank.com"
+    ],
+    "sender_subdomains": [
+      "alat.ng"
+    ]
+  },
+  "efcc.gov.ng": {
+    "organization": "Economic and Financial Crimes Commission (EFCC)",
+    "domain": "efcc.gov.ng",
+    "category": "government",
+    "verified_sender_emails": [
+      "info@efcc.gov.ng",
+      "helpdesk@efcc.gov.ng"
+    ],
+    "sender_subdomains": [
+      "mail.efcc.gov.ng"
+    ]
+  },
+  "cbn.gov.ng": {
+    "organization": "Central Bank of Nigeria (CBN)",
+    "domain": "cbn.gov.ng",
+    "category": "banking",
+    "verified_sender_emails": [
+      "contactcbn@cbn.gov.ng",
+      "info@cbn.gov.ng"
+    ],
+    "sender_subdomains": [
+      "mail.cbn.gov.ng"
+    ]
+  },
+  "mtn.ng": {
+    "organization": "MTN Nigeria",
+    "domain": "mtn.ng",
+    "category": "telecom",
+    "verified_sender_emails": [
+      "customercare.ng@mtn.com",
+      "customercare@mtn.ng"
+    ],
+    "sender_subdomains": [
+      "mtnonline.com",
+      "mail.mtn.ng"
+    ]
+  },
+  "mtnonline.com": {
+    "organization": "MTN Nigeria Online",
+    "domain": "mtnonline.com",
+    "category": "telecom",
+    "verified_sender_emails": [
+      "customercare@mtnonline.com"
+    ],
+    "sender_subdomains": [
+      "web.mtnonline.com"
+    ]
+  },
+  "paypal.com": {
+    "organization": "PayPal",
+    "domain": "paypal.com",
+    "category": "payment",
+    "verified_sender_emails": [
+      "service@paypal.com",
+      "paypal@mail.paypal.com"
+    ],
+    "sender_subdomains": [
+      "mail.paypal.com",
+      "intl.paypal.com"
+    ]
+  },
+  "stripe.com": {
+    "organization": "Stripe",
+    "domain": "stripe.com",
+    "category": "payment",
+    "verified_sender_emails": [
+      "support@stripe.com",
+      "notifications@stripe.com"
+    ],
+    "sender_subdomains": [
+      "mail.stripe.com"
+    ]
+  },
+  "chase.com": {
+    "organization": "JPMorgan Chase",
+    "domain": "chase.com",
+    "category": "banking",
+    "verified_sender_emails": [
+      "no-reply@chase.com",
+      "customer.service@chase.com"
+    ],
+    "sender_subdomains": [
+      "alerts.chase.com",
+      "mail.chase.com"
+    ]
+  },
+  "bankofamerica.com": {
+    "organization": "Bank of America",
+    "domain": "bankofamerica.com",
+    "category": "banking",
+    "verified_sender_emails": [
+      "customerservice@bankofamerica.com",
+      "onlinebanking@ealerts.bankofamerica.com"
+    ],
+    "sender_subdomains": [
+      "ealerts.bankofamerica.com"
+    ]
+  },
+  "wellsfargo.com": {
+    "organization": "Wells Fargo",
+    "domain": "wellsfargo.com",
+    "category": "banking",
+    "verified_sender_emails": [
+      "alerts@wellsfargo.com",
+      "customerservice@wellsfargo.com"
+    ],
+    "sender_subdomains": [
+      "mail.wellsfargo.com"
+    ]
+  },
+  "citi.com": {
+    "organization": "Citibank",
+    "domain": "citi.com",
+    "category": "banking",
+    "verified_sender_emails": [
+      "citicards@info.citi.com",
+      "customer.service@citi.com"
+    ],
+    "sender_subdomains": [
+      "info.citi.com"
+    ]
+  },
+  "barclays.co.uk": {
+    "organization": "Barclays",
+    "domain": "barclays.co.uk",
+    "category": "banking",
+    "verified_sender_emails": [
+      "noreply@barclays.co.uk"
+    ],
+    "sender_subdomains": [
+      "mail.barclays.co.uk"
+    ]
+  },
+  "hsbc.com": {
+    "organization": "HSBC",
+    "domain": "hsbc.com",
+    "category": "banking",
+    "verified_sender_emails": [
+      "hsbc@notifications.hsbc.com"
+    ],
+    "sender_subdomains": [
+      "notifications.hsbc.com"
+    ]
+  },
+  "google.com": {
+    "organization": "Google",
+    "domain": "google.com",
+    "category": "tech",
+    "verified_sender_emails": [
+      "no-reply@accounts.google.com",
+      "support@google.com",
+      "workspace-noreply@google.com"
+    ],
+    "sender_subdomains": [
+      "accounts.google.com",
+      "mail.google.com"
+    ]
+  },
+  "apple.com": {
+    "organization": "Apple",
+    "domain": "apple.com",
+    "category": "tech",
+    "verified_sender_emails": [
+      "appleid@id.apple.com",
+      "no_reply@email.apple.com",
+      "news@insideapple.apple.com"
+    ],
+    "sender_subdomains": [
+      "id.apple.com",
+      "email.apple.com"
+    ]
+  },
+  "microsoft.com": {
+    "organization": "Microsoft",
+    "domain": "microsoft.com",
+    "category": "tech",
+    "verified_sender_emails": [
+      "account-security-noreply@accountprotection.microsoft.com",
+      "billing@microsoft.com"
+    ],
+    "sender_subdomains": [
+      "accountprotection.microsoft.com",
+      "email.microsoft.com"
+    ]
+  },
+  "amazon.com": {
+    "organization": "Amazon & AWS",
+    "domain": "amazon.com",
+    "category": "ecommerce",
+    "verified_sender_emails": [
+      "auto-confirm@amazon.com",
+      "order-update@amazon.com",
+      "no-reply-aws@amazon.com"
+    ],
+    "sender_subdomains": [
+      "bounces.amazon.com",
+      "aws.amazon.com"
+    ]
+  },
+  "github.com": {
+    "organization": "GitHub",
+    "domain": "github.com",
+    "category": "tech",
+    "verified_sender_emails": [
+      "support@github.com",
+      "noreply@github.com"
+    ],
+    "sender_subdomains": [
+      "mail.github.com"
+    ]
+  },
+  "cloudflare.com": {
+    "organization": "Cloudflare",
+    "domain": "cloudflare.com",
+    "category": "cloud",
+    "verified_sender_emails": [
+      "support@cloudflare.com",
+      "noreply@cloudflare.com"
+    ],
+    "sender_subdomains": [
+      "mail.cloudflare.com"
+    ]
+  },
+  "facebookmail.com": {
+    "organization": "Meta (Facebook / Instagram)",
+    "domain": "facebookmail.com",
+    "category": "tech",
+    "verified_sender_emails": [
+      "security@facebookmail.com",
+      "notification@facebookmail.com"
+    ],
+    "sender_subdomains": [
+      "mail.facebookmail.com"
+    ]
+  },
+  "netflix.com": {
+    "organization": "Netflix",
+    "domain": "netflix.com",
+    "category": "media",
+    "verified_sender_emails": [
+      "info@mailer.netflix.com",
+      "support@netflix.com"
+    ],
+    "sender_subdomains": [
+      "mailer.netflix.com"
+    ]
+  },
+  "spotify.com": {
+    "organization": "Spotify",
+    "domain": "spotify.com",
+    "category": "media",
+    "verified_sender_emails": [
+      "no-reply@spotify.com"
+    ],
+    "sender_subdomains": [
+      "email.spotify.com"
+    ]
+  },
+  "jumia.com.ng": {
+    "organization": "Jumia Nigeria",
+    "domain": "jumia.com.ng",
+    "category": "ecommerce",
+    "verified_sender_emails": [
+      "service@jumia.com.ng"
+    ],
+    "sender_subdomains": [
+      "news.jumia.com.ng"
+    ]
+  },
+  "ebay.com": {
+    "organization": "eBay",
+    "domain": "ebay.com",
+    "category": "ecommerce",
+    "verified_sender_emails": [
+      "ebay@ebay.com"
+    ],
+    "sender_subdomains": [
+      "mail.ebay.com"
+    ]
+  },
+  "linkedin.com": {
+    "organization": "LinkedIn",
+    "domain": "linkedin.com",
+    "category": "tech",
+    "verified_sender_emails": [
+      "security-noreply@linkedin.com",
+      "messages-noreply@linkedin.com"
+    ],
+    "sender_subdomains": [
+      "mail.linkedin.com"
+    ]
+  },
+  "slack.com": {
+    "organization": "Slack",
+    "domain": "slack.com",
+    "category": "tech",
+    "verified_sender_emails": [
+      "feedback@slack.com",
+      "notification@slack.com"
+    ],
+    "sender_subdomains": [
+      "mail.slack.com"
+    ]
+  },
+  "zoom.us": {
+    "organization": "Zoom",
+    "domain": "zoom.us",
+    "category": "tech",
+    "verified_sender_emails": [
+      "no-reply@zoom.us"
+    ],
+    "sender_subdomains": [
+      "mail.zoom.us"
+    ]
+  },
+  "dropbox.com": {
+    "organization": "Dropbox",
+    "domain": "dropbox.com",
+    "category": "tech",
+    "verified_sender_emails": [
+      "no-reply@dropbox.com"
+    ],
+    "sender_subdomains": [
+      "mail.dropbox.com"
+    ]
+  }
+}

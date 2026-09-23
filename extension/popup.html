@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="popup-body">
+
+  <div class="header">
+    <div class="brand">
+      <span class="logo-icon">🛡️</span>
+      <div>
+        <span class="logo">ScamCheck</span>
+        <span class="brand-subtitle">Security Extension</span>
+      </div>
+    </div>
+
+    <button id="menuBtn" class="icon-btn" title="Open Dashboard">⚙️</button>
+  </div>
+
+  <div class="intro">
+    <h2>Stay protected online</h2>
+    <p>
+      ScamCheck helps identify suspicious links, messages,
+      and websites while you browse.
+    </p>
+  </div>
+
+  <div class="status-card">
+    <div id="statusDot" class="status-dot disabled"></div>
+
+    <div class="status-info">
+      <span class="status-label">Protection Status</span>
+      <span id="statusText">Protection Disabled</span>
+    </div>
+  </div>
+
+  <button id="connectBtn" class="connect-btn disconnected">
+    CONNECT
+  </button>
+
+  <div class="protection-info">
+    <span class="info-icon">✓</span>
+    <span>Real-time scam protection</span>
+  </div>
+
+  <div class="footer">
+    <a href="#" id="streamlitLink">
+      Open ScamCheck Dashboard ↗
+    </a>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

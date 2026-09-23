@@ -1,0 +1,16 @@
+fastapi
+uvicorn
+pydantic
+Levenshtein
+dnspython
+python-whois
+requests
+beautifulsoup4
+scikit-learn
+joblib
+pandas
+google-genai
+python-dotenv
+tldextract
+supabase
+spacy
