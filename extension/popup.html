@@ -1,57 +1,134 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
+  <script src="popup.js" defer></script>
 </head>
-
 <body class="popup-body">
-
-  <div class="header">
-    <div class="brand">
-      <span class="logo-icon">🛡️</span>
-      <div>
-        <span class="logo">ScamCheck</span>
-        <span class="brand-subtitle">Security Extension</span>
+  <div class="glass-container">
+    
+    <!-- Header Area -->
+    <div class="header">
+      <div class="brand">
+        <div class="logo-icon-wrapper">
+          <svg class="logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <span class="logo">Scamlex</span>
+          <div class="connection-status">
+            <span id="apiStatusDot" class="status-dot"></span>
+            <span id="apiStatusText" class="status-label">Checking...</span>
+          </div>
+        </div>
+      </div>
+      <div class="header-actions">
+        <button id="navHomeBtn" class="icon-btn active" title="Home">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+        </button>
+        <button id="navSettingsBtn" class="icon-btn" title="Settings">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+        </button>
       </div>
     </div>
 
-    <button id="menuBtn" class="icon-btn" title="Open Dashboard">⚙️</button>
-  </div>
+    <!-- Auth Profile Area -->
+    <div id="authSection" class="auth-section">
+      <div id="userProfile" class="user-profile hidden">
+        <div class="user-avatar" id="userAvatar">U</div>
+        <div class="user-info">
+          <div class="user-email" id="userEmail">user@example.com</div>
+          <div class="user-plan" id="userPlan">Active Member</div>
+        </div>
+        <button id="logoutBtn" class="logout-btn" title="Logout">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+        </button>
+      </div>
+      <button id="loginBtn" class="auth-btn">Login to Scamlex</button>
+    </div>
 
-  <div class="intro">
-    <h2>Stay protected online</h2>
-    <p>
-      ScamCheck helps identify suspicious links, messages,
-      and websites while you browse.
-    </p>
-  </div>
+    <!-- MAIN VIEW (Home) -->
+    <div id="viewHome" class="view active">
+      <div class="status-card" id="statusCard">
+        <div class="status-indicator">
+          <div id="statusPulse" class="pulse"></div>
+          <div id="statusDot" class="dot"></div>
+        </div>
+        <div class="status-info">
+          <span class="status-label">Engine Status</span>
+          <span id="statusText" class="status-text">Protection Active</span>
+        </div>
+      </div>
 
-  <div class="status-card">
-    <div id="statusDot" class="status-dot disabled"></div>
+      <button id="connectBtn" class="connect-btn disconnect">
+        <span class="btn-text" id="btnText">DISCONNECT</span>
+      </button>
 
-    <div class="status-info">
-      <span class="status-label">Protection Status</span>
-      <span id="statusText">Protection Disabled</span>
+      <!-- Threat Metrics -->
+      <div class="stats-grid">
+        <div class="stat-box">
+          <div class="stat-value" id="statLinks">0</div>
+          <div class="stat-label">Links Scanned</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-value" id="statMessages">0</div>
+          <div class="stat-label">Msgs Scanned</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SETTINGS VIEW -->
+    <div id="viewSettings" class="view hidden">
+      <div class="settings-list">
+        <div class="setting-item">
+          <label>Real-time Scanning</label>
+          <label class="switch">
+            <input type="checkbox" id="settingScanning" checked>
+            <span class="slider round"></span>
+          </label>
+        </div>
+
+        <div class="setting-item">
+          <label>Protection Snooze</label>
+          <button id="btnSnooze" class="secondary-btn">Pause 1 Hour</button>
+        </div>
+
+        <div class="setting-item">
+          <label>Sensitivity Level</label>
+          <select id="settingSensitivity" class="modern-select">
+            <option value="standard">Standard</option>
+            <option value="high">High (Strict)</option>
+          </select>
+        </div>
+
+        <div class="setting-item">
+          <label>Warning Alerts</label>
+          <select id="settingWarnings" class="modern-select">
+            <option value="all">Popup + In-line</option>
+            <option value="inline">In-line Only</option>
+          </select>
+        </div>
+        
+        <button id="btnWhitelist" class="secondary-btn full">Trust Current Site</button>
+      </div>
+
+      <div class="manual-report">
+        <div class="section-title">Manual Scan</div>
+        <textarea id="manualReportText" class="modern-textarea" placeholder="Paste URL or snippet..."></textarea>
+        <button id="btnSubmitReport" class="primary-btn full">Analyze</button>
+        <div id="reportResult" class="report-result hidden"></div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <button id="dashboardBtn" class="dashboard-btn">Open Security Dashboard &rarr;</button>
     </div>
   </div>
-
-  <button id="connectBtn" class="connect-btn disconnected">
-    CONNECT
-  </button>
-
-  <div class="protection-info">
-    <span class="info-icon">✓</span>
-    <span>Real-time scam protection</span>
-  </div>
-
-  <div class="footer">
-    <a href="#" id="streamlitLink">
-      Open ScamCheck Dashboard ↗
-    </a>
-  </div>
-
-  <script src="popup.js"></script>
 </body>
 </html>
