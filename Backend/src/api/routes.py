@@ -54,7 +54,7 @@ async def scan_files(files: List[UploadFile] = File(...)):
         results.append({
             "filename": file.filename,
             "status": "success",
-            "scan_data": scan_data 
-        })
+            "scan_data": scan_data,
+            "content": text_content})
         
     return {"results": results}
