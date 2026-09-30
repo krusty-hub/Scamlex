@@ -31,19 +31,34 @@ if supabase_url and supabase_key:
     except Exception as e:
         print(f"Failed to initialize Supabase client: {e}")
 def url_extractor(text: str) -> list[str]:
-    pattern =  r'(?<![@\w.-])(?:https?://\S+|www\.\S+|(?:[\w-]+\.)+[a-zA-Z]{2,}(?:/\s*)?)'
-    urls = [url.rstrip(".,!?;:)]}") for url in re.findall(pattern, text)]
-    return urls
+    # Extract standard URLs
+    url_pattern = r'(?<![@\w.-])(?:https?://\S+|www\.\S+|(?:[\w-]+\.)+[a-zA-Z]{2,}(?:/\S*)?)'
+    urls = [url.rstrip(".,!?;:)]}") for url in re.findall(url_pattern, text)]
+    
+    # Extract emails separately
+    email_pattern = r'[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}'
+    emails = [email.rstrip(".,!?;:)]}") for email in re.findall(email_pattern, text)]
+    
+    # Combine and deduplicate
+    combined = list(set(urls + emails))
+    return combined
 
 def normalize_url(url: str) -> str:
     """
     Robust URL normalization:
     - Add missing scheme
     - Lowercase hostname
+    - Handle emails
     - Remove trailing dots
     - Decode safely
     """
-    if not url.startswith(('http://', 'https://')):
+    url = url.strip()
+    
+    # Check if it's an email address
+    if re.match(r'^[^@]+@[^@]+\.[^@]+$', url) and not url.startswith(('http://', 'https://')):
+        return f"mailto:{url}"
+
+    if not url.startswith(('http://', 'https://', 'mailto:')):
         url = 'http://' + url
         
     try:
@@ -55,8 +70,14 @@ def normalize_url(url: str) -> str:
         if parsed.port:
             netloc += f":{parsed.port}"
             
+        # Keep username/password for analysis if present
+        if parsed.username:
+            auth = parsed.username
+            if parsed.password:
+                auth += f":{parsed.password}"
+            netloc = f"{auth}@{netloc}"
+            
         normalized = parsed._replace(netloc=netloc).geturl()
-        # Decode safe percent-encoded characters (like %20, %2F)
         normalized = unquote(normalized)
         return normalized
     except Exception:
@@ -312,11 +333,19 @@ def check_typosquatting(url: str, trusted_domains: list[str] = None) -> tuple[in
         
     points = 0
     reason_string = None
-    hostname = urlparse(url).hostname
     
+    # Robust URL Parsing: Extract hostname, ignoring protocols, paths, queries
+    try:
+        ext = tld_extract(url)
+        # Reconstruct the full hostname (e.g., gemini.google.com)
+        hostname = (f"{ext.subdomain}." if ext.subdomain else "") + (f"{ext.domain}.{ext.suffix}" if ext.suffix else ext.domain)
+    except Exception:
+        hostname = urlparse(url).hostname
+        
     if hostname:
         hostname = hostname.lower()
         for domain in trusted_domains:
+            # Subdomain handling: safely handle subdomains by checking if hostname ends with .trusted_domain
             if hostname == domain or hostname.endswith('.' + domain):
                 continue
                 

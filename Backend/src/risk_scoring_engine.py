@@ -205,6 +205,11 @@ def analyze_url(url: str) -> dict:
         score = 0
         reasons = []
 
+    # Explicit Trusted Entity Override
+    if is_trusted_domain and not (signals["typosquatting"] or signals["brand_impersonation"] or signals["homoglyph"] or signals["nested_url"]):
+        score = 0
+        reasons = [f"Verified Trusted Entity ({registrable_domain}). Legitimate service."]
+
     # Final cap
     final_score = min(score, 100)
     
