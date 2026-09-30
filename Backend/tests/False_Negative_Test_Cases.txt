@@ -1,0 +1,30 @@
+FN 01: https://storage.googleapis.com/cocodrillo/thannina.html#
+4tpVAP86551fyrC701bwwrzwwqje18504PQJXYLMWSLOSVER77987OLSL46320H26
+
+FN 02: https://storage.googleapis.com/devilex/hiya.html?act=cl&pid=10638_md&uid=2&vid=257909&ofid=335&lid=420&cid=360745
+
+FN 03: http://unichemlabs.com/index.php?8b9sol
+
+FN 04: https://storage.googleapis.com/flores/flores.html#?act=cl&pid=10636_md&uid=2&vid=257810&ofid=335&lid=420&cid=360745
+
+FN 05: https://secure-login.example.com/account/verify](https://secure-login.example.com/account/verify
+
+FN 06: https://trusted-site.com@malicious-site.com/login](https://trusted-site.com@malicious-site.com/login
+
+FN 07: http://185.123.45.67/login](http://185.123.45.67/login
+
+FN 08: https://xn--pple-43d.example/login](https://xn--pple-43d.example/login
+
+FN 09: https://paypa1-security.com/login](https://paypa1-security.com/login
+
+FN 10: https://example.com/%6c%6f%67%69%6e/%76%65%72%69%66%79](https://example.com/%6c%6f%67%69%6e/%76%65%72%69%66%79
+
+FN 11: https://example.com/invoice.exe](https://example.com/invoice.exe
+
+FN 12: https://example.com/a/b/c/d/e/f/login/verify/account](https://example.com/a/b/c/d/e/f/login/verify/account
+
+FN 13: https://x8K29f7Qa.example.com/login](https://x8K29f7Qa.example.com/login
+
+FN 14: https://example.com/login?token=8fK29xL72Qa91Zm83Rt61](https://example.com/login?token=8fK29xL72Qa91Zm83Rt61
+
+FN 15: https://example.com/login?verify=true&account=secure&redirect=login](https://example.com/login?verify=true&account=secure&redirect=login
