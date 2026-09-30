@@ -112,6 +112,48 @@ async def scan_text(data: ScanPayload):
         "flaggedTexts": flagged_items
     }
 
+class ScanBatchPayload(BaseModel):
+    items: list[ScanPayload]
+
+@app.post("/scan_batch")
+async def scan_text_batch(data: ScanBatchPayload):
+    results = []
+    loop = asyncio.get_running_loop()
+    
+    tasks = []
+    for item in data.items:
+        tasks.append(asyncio.wait_for(
+            loop.run_in_executor(executor, check_message, item.text),
+            timeout=10.0
+        ))
+        
+    completed_results = await asyncio.gather(*tasks, return_exceptions=True)
+    
+    for item, result in zip(data.items, completed_results):
+        if isinstance(result, Exception):
+            results.append({
+                "isScam": False,
+                "score": 0,
+                "level": "ERROR",
+                "message": f"Scan failed: {str(result)}",
+                "reasons": [],
+                "flaggedTexts": []
+            })
+        else:
+            reasons_list = result.get("reasons", [])
+            flagged_items = extract_flagged_texts(item.text, result)
+            summary_msg = reasons_list[0] if reasons_list else "No significant indicators found."
+            results.append({
+                "isScam": result["score"] >= 60,
+                "score": result["score"],
+                "level": result.get("level", "LOW"),
+                "message": summary_msg,
+                "reasons": reasons_list,
+                "flaggedTexts": flagged_items
+            })
+            
+    return {"results": results}
+
 class EmailScanPayload(BaseModel):
     email: str
 

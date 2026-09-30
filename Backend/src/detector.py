@@ -70,6 +70,8 @@ class RiskResult(TypedDict):
     score: int            # 0-100, higher = more suspicious
     level: str             # "green" | "yellow" | "red"
     reasons: list[str]     # plain-English explanations for the score
+    matched_terms: list[str]
+    urls: list[str]
 
 
 # Score -> level thresholds. Feel free to tune these once you've tested
@@ -115,38 +117,52 @@ def check_message(text: str) -> RiskResult:
     
     total_points = 0
     reasons = []
+    seen_matched_terms = set()
     
-    urgency_points, urgency_reason = check_urgency_language(text_without_urls)
+    urgency_points, urgency_reason, urgency_terms = check_urgency_language(text_without_urls)
     total_points += urgency_points
-    reasons.append(urgency_reason)
+    if urgency_reason:
+        reasons.append(urgency_reason)
+        seen_matched_terms.update(urgency_terms)
     
     pin_points, pin_reason = check_pin_otp_request(text_without_urls)
     total_points += pin_points
-    reasons.append(pin_reason)
+    if pin_reason:
+        reasons.append(pin_reason)
     
     link_points, link_reasons = check_suspicious_links(url_list)
     total_points += link_points
     reasons.extend(link_reasons)
     
-    greeting_points, greeting_reason = check_generic_greeting(text_without_urls)
+    greeting_points, greeting_reason, greeting_terms = check_generic_greeting(text_without_urls)
     total_points += greeting_points
-    reasons.append(greeting_reason)
+    if greeting_reason:
+        reasons.append(greeting_reason)
+        seen_matched_terms.update(greeting_terms)
     
-    money_points, money_reason = check_money_request(text_without_urls)
+    money_points, money_reason, money_terms = check_money_request(text_without_urls)
     total_points += money_points
-    reasons.append(money_reason)
+    if money_reason:
+        reasons.append(money_reason)
+        seen_matched_terms.update(money_terms)
     
-    prize_points, prize_reason = check_prize_or_reward(text_without_urls)
+    prize_points, prize_reason, prize_terms = check_prize_or_reward(text_without_urls)
     total_points += prize_points
-    reasons.append(prize_reason)
+    if prize_reason:
+        reasons.append(prize_reason)
+        seen_matched_terms.update(prize_terms)
     
-    threat_points, threat_reason = check_threats_or_consequences(text_without_urls)
+    threat_points, threat_reason, threat_terms = check_threats_or_consequences(text_without_urls)
     total_points += threat_points
-    reasons.append(threat_reason)
+    if threat_reason:
+        reasons.append(threat_reason)
+        seen_matched_terms.update(threat_terms)
     
-    personal_info_points, personal_info_reason = check_personal_information_request(text_without_urls)
+    personal_info_points, personal_info_reason, personal_terms = check_personal_information_request(text_without_urls)
     total_points += personal_info_points
-    reasons.append(personal_info_reason)
+    if personal_info_reason:
+        reasons.append(personal_info_reason)
+        seen_matched_terms.update(personal_terms)
     
     #combination bonuses
     #didnt use if-elif-else because multiple checks can be true at the same time
@@ -174,38 +190,37 @@ def check_message(text: str) -> RiskResult:
     # ML Classification acting as an assistant (Strict Thresholds & Max Pooling)
     if ml_pipeline is not None and text_without_urls:
         try:
-            # Segment text into sentences
-            segments = [s.strip() for s in re.split(r'[.!?\n]+', text_without_urls) if s.strip()]
-            if not segments:
-                segments = [text_without_urls]
+            # Evaluate the entire text snippet once to preserve context and avoid redundant executions
+            cleaned = clean_text(text_without_urls)
+            if cleaned:
+                probas = ml_pipeline.predict_proba([cleaned])[0]
+                classes = ml_pipeline.classes_
                 
-            max_confidence = 0.0
-            
-            for segment in segments:
-                cleaned = clean_text(segment)
-                if cleaned:
-                    probas = ml_pipeline.predict_proba([cleaned])[0]
-                    classes = ml_pipeline.classes_
-                    
-                    malicious_idx = -1
-                    for i, c in enumerate(classes):
-                        if str(c).lower() in ['1', 'scam', 'phishing']:
-                            malicious_idx = i
-                            break
-                            
-                    if malicious_idx != -1:
-                        conf = probas[malicious_idx]
-                        if conf > max_confidence:
-                            max_confidence = conf
-                            
-            if max_confidence > 0.85:
-                total_points += 15
-                reasons.append(f"ML text analysis detected highly suspicious patterns (Confidence: {max_confidence:.0%})")
+                malicious_idx = -1
+                for i, c in enumerate(classes):
+                    if str(c).lower() in ['1', 'scam', 'phishing']:
+                        malicious_idx = i
+                        break
+                        
+                if malicious_idx != -1:
+                    max_confidence = probas[malicious_idx]
+                        
+                    if max_confidence > 0.85:
+                        total_points += 15
+                        reasons.append(f"ML text analysis detected highly suspicious patterns (Confidence: {max_confidence:.0%})")
         except Exception as e:
             print(f"ML Pipeline error: {e}")
 
     total_points = min(total_points, 100)
-    reasons = [reason for reason in reasons if reason is not None]#removes None
+    
+    # Deduplicate reasons while preserving order
+    seen = set()
+    deduped_reasons = []
+    for r in reasons:
+        if r is not None and r not in seen:
+            seen.add(r)
+            deduped_reasons.append(r)
+    reasons = deduped_reasons
     
     # Critical Override
     if is_critical:
@@ -253,11 +268,13 @@ def check_message(text: str) -> RiskResult:
         except Exception as e:
             print(f"Gemini API error: {e}")
             
-    riskResult: RiskResult = {
+    riskResult = {
         "score" : total_points,
         "level" : level,
-        "reasons" : reasons        
-        }    
+        "reasons" : reasons,
+        "matched_terms": list(seen_matched_terms),
+        "urls": url_list
+    }    
     
     return riskResult
 
@@ -281,7 +298,7 @@ def check_social_engineering_padding(text: str) -> tuple[bool, Optional[str]]:
         return True, f"Social engineering padding detected: {', '.join(detected)}"
     return False, None
 
-def check_urgency_language(text: str) -> tuple[int, Optional[str]]:
+def check_urgency_language(text: str) -> tuple[int, Optional[str], list[str]]:
     
     urgency_phrases = urgency_phrases = [  #Add More
     "act now",
@@ -309,7 +326,7 @@ def check_urgency_language(text: str) -> tuple[int, Optional[str]]:
         phrases_str = ", ".join([f"'{phrase}'" for phrase in urgency_phrases_detected])
         reason_string = f"Urgency Phrase Detected: {phrases_str}"           
         
-    return (total_points, reason_string)
+    return (total_points, reason_string, urgency_phrases_detected)
 
 
 def check_pin_otp_request(text: str) -> tuple[int, Optional[str]]:
@@ -360,7 +377,7 @@ def check_suspicious_links(url_list: list[str]) -> tuple[int, list[str]]:
     return (total_points, total_reasons_list)
 
 
-def check_generic_greeting(text: str) -> tuple[int, Optional[str]]:
+def check_generic_greeting(text: str) -> tuple[int, Optional[str], list[str]]:
     
     generic_greetings = [#add more
         "dear customer",
@@ -380,7 +397,7 @@ def check_generic_greeting(text: str) -> tuple[int, Optional[str]]:
     if generic_greetings_detected:
         phrases_str = ", ".join([f"'{phrase}'" for phrase in generic_greetings_detected])
         reason_string = f"Generic Greeting Detected: {phrases_str}"
-    return (total_points, reason_string)
+    return (total_points, reason_string, generic_greetings_detected)
 
 #Added check_* functions
 #check_money_request()
@@ -388,7 +405,7 @@ def check_generic_greeting(text: str) -> tuple[int, Optional[str]]:
 #check_threats_or_consequences()
 #check_personal_information_request()
 
-def check_money_request(text: str) -> tuple[int, Optional[str]]:
+def check_money_request(text: str) -> tuple[int, Optional[str], list[str]]:
     
     points = 0
     reason_string = None
@@ -426,9 +443,9 @@ def check_money_request(text: str) -> tuple[int, Optional[str]]:
         phrases_str = ", ".join(f"'{phrase}'"for phrase in money_request_detected)
         reason_string = f"Money Request Detected: {phrases_str}"
       
-    return (points, reason_string)
+    return (points, reason_string, money_request_detected)
 
-def check_prize_or_reward(text: str) -> tuple[int, Optional[str]]:
+def check_prize_or_reward(text: str) -> tuple[int, Optional[str], list[str]]:
     
     points = 0
     reason_string = None
@@ -467,9 +484,9 @@ def check_prize_or_reward(text: str) -> tuple[int, Optional[str]]:
         reason_string = f"The message claims you have won a prize or reward: {phrases_str}"
     
     
-    return (points, reason_string)
+    return (points, reason_string, prize_or_reward_detected)
 
-def check_threats_or_consequences(text: str) -> tuple[int, Optional[str]]:
+def check_threats_or_consequences(text: str) -> tuple[int, Optional[str], list[str]]:
     
     points = 0
     reason_string = None
@@ -506,9 +523,9 @@ def check_threats_or_consequences(text: str) -> tuple[int, Optional[str]]:
         phrases_str = ", ".join(f"'{phrase}'" for phrase in threats_or_consequences_detected)
         reason_string = f"The message contains threats or warnings about negative consequences: {phrases_str}"
         
-    return (points, reason_string)
+    return (points, reason_string, threats_or_consequences_detected)
 
-def check_personal_information_request(text: str) -> tuple[int, Optional[str]]:
+def check_personal_information_request(text: str) -> tuple[int, Optional[str], list[str]]:
     
     points = 0
     reason_string = None
@@ -537,7 +554,7 @@ def check_personal_information_request(text: str) -> tuple[int, Optional[str]]:
         phrases_str = ", ".join(f"'{phrase}'" for phrase in personal_info_request_detected)
         reason_string = f"The message asks for personal or identifying information: {phrases_str}"
             
-    return (points, reason_string)    
+    return (points, reason_string, personal_info_request_detected)    
         
 if __name__ == "__main__":
     test_messages = [
